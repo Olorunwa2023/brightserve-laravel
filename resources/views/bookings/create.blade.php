@@ -17,10 +17,16 @@
             @csrf
 
             <div class="form-group">
-                <label for="service_id">Service Required</label>
+         <label for="service_id">Service Required</label>
 
-                <select id="service_id" name="service_id" required>
-                    <option value="">Select a service</option>
+            <select id="service_id" name="service_id" required>
+                  <option value="">Select a service</option>
+
+               @foreach ($services as $service)
+                 <option value="{{ $service->id }}">
+                            {{ $service->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
