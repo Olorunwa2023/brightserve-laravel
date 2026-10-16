@@ -29,6 +29,6 @@
     <footer>
         <p>&copy; 2026 BrightServe. All rights reserved.</p>
     </footer>
-
+    <script src="{{ asset('js/site.js') }}" defer></script>
 </body>
 </html>
