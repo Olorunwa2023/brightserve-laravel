@@ -140,3 +140,74 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* Service request page */
+.request-page {
+    padding: 65px 8%;
+    background: #f7f9fc;
+}
+
+.request-container {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.request-container h1 {
+    margin-bottom: 10px;
+    color: #1769e0;
+}
+
+.request-container > p {
+    margin-bottom: 25px;
+    color: #687386;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d5dce7;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: 2px solid #1769e0;
+    border-color: #1769e0;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.request-container button {
+    border: none;
+    cursor: pointer;
+    font: inherit;
+}
+
+@media (max-width: 700px) {
+    .request-page {
+        padding: 35px 5%;
+    }
+
+    .request-container {
+        padding: 22px;
+    }
+}
