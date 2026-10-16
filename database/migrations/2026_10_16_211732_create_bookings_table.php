@@ -10,21 +10,23 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    Schema::create('bookings', function (Blueprint $table) {
-    $table->id();
+    {
+        Schema::create('bookings', function (Blueprint $table) {
+            $table->id();
 
-    $table->foreignId('service_id')->constrained('services');
+            $table->foreignId('service_id')->constrained('services');
 
-    $table->string('customer_name');
-    $table->string('phone');
-    $table->string('email')->nullable();
-    $table->date('preferred_date')->nullable();
-    $table->text('message')->nullable();
+            $table->string('customer_name');
+            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->date('preferred_date')->nullable();
+            $table->text('message')->nullable();
 
-    $table->string('status')->default('new');
+            $table->string('status')->default('new');
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
