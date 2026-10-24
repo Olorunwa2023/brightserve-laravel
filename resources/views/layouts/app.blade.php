@@ -15,11 +15,12 @@
     <header>
         <div class="logo">BrightServe</div>
 
-        <nav>
-            <a href="/">Home</a>
-            <a href="/#services">Services</a>
-            <a href="/#about">About</a>
-        </nav>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/#services">Services</a>
+        <a href="/#about">About</a>
+        <a href="{{ route('request.create') }}">Request a Service</a>
+    </nav>
     </header>
 
     <main>

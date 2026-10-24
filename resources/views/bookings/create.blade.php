@@ -12,8 +12,24 @@
         <p>
             Tell us what you need, and our team will get in touch with you.
         </p>
+                        @if (session('success'))
+                <div class="alert alert-success" role="status">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-        <form action="{{ url('/request') }}" method="POST">
+            @if ($errors->any())
+                <div class="alert alert-error" role="alert">
+                    <p>Please correct the following errors:</p>
+
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ url('/request') }}" method="POST">
             @csrf
 
             <div class="form-group">

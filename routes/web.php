@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
 use App\Models\Service;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
@@ -14,3 +15,6 @@ Route::get('/request', function () {
 
     return view('bookings.create', compact('services'));
 })->name('request.create');
+
+Route::post('/request', [BookingController::class, 'store'])
+    ->name('request.store');
