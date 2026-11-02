@@ -29,17 +29,19 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ url('/request') }}" method="POST">
+        <form action="{{ url('/request') }}" method="POST">
             @csrf
-
             <div class="form-group">
-         <label for="service_id">Service Required</label>
+                <label for="service_id">Service Required</label>
 
-            <select id="service_id" name="service_id" required>
-                  <option value="">Select a service</option>
+                <select id="service_id" name="service_id" required>
+                    <option value="">Select a service</option>
 
-               @foreach ($services as $service)
-                 <option value="{{ $service->id }}">
+                    @foreach ($services as $service)
+                        <option
+                            value="{{ $service->id }}"
+                            {{ old('service_id') == $service->id ? 'selected' : '' }}
+                        >
                             {{ $service->name }}
                         </option>
                     @endforeach
@@ -53,6 +55,8 @@
                     type="text"
                     id="customer_name"
                     name="customer_name"
+                    value="{{ old('customer_name') }}"
+                    maxlength="100"
                     required
                 >
             </div>
@@ -64,6 +68,8 @@
                     type="tel"
                     id="phone"
                     name="phone"
+                    value="{{ old('phone') }}"
+                    maxlength="30"
                     required
                 >
             </div>
@@ -75,6 +81,7 @@
                     type="email"
                     id="email"
                     name="email"
+                    value="{{ old('email') }}"
                 >
             </div>
 
@@ -85,6 +92,7 @@
                     type="date"
                     id="preferred_date"
                     name="preferred_date"
+                    value="{{ old('preferred_date') }}"
                 >
             </div>
 
@@ -95,13 +103,19 @@
                     id="message"
                     name="message"
                     rows="5"
-                ></textarea>
+                    maxlength="1000"
+                >{{ old('message') }}</textarea>
+
+                <small id="message-counter" aria-live="polite">
+                    0 / 1000 characters
+                </small>
             </div>
 
             <button type="submit" class="button">
                 Submit Request
             </button>
         </form>
+
 
     </div>
 </section>

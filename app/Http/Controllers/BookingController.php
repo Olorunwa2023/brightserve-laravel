@@ -17,11 +17,37 @@ class BookingController extends Controller
                 'integer',
                 Rule::exists('services', 'id')->where('active', 1),
             ],
-            'customer_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:30'],
-            'email' => ['nullable', 'email', 'max:255'],
-            'preferred_date' => ['nullable', 'date', 'after_or_equal:today'],
-            'message' => ['nullable', 'string', 'max:5000'],
+
+            'customer_name' => [
+                'required',
+                'string',
+                'max:100',
+            ],
+
+            'phone' => [
+                'required',
+                'string',
+                'max:30',
+                'regex:/^\+?[0-9][0-9\s().-]*$/',
+            ],
+
+            'email' => [
+                'nullable',
+                'email',
+                'max:255',
+            ],
+
+            'preferred_date' => [
+                'nullable',
+                'date',
+                'after_or_equal:today',
+            ],
+
+            'message' => [
+                'nullable',
+                'string',
+                'max:1000',
+            ],
         ]);
 
         $validated['status'] = 'new';
@@ -30,6 +56,9 @@ class BookingController extends Controller
 
         return redirect()
             ->route('request.create')
-            ->with('success', 'Your service request has been submitted successfully.');
+            ->with(
+                'success',
+                'Your service request has been submitted successfully.'
+            );
     }
 }
