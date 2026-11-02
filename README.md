@@ -1,59 +1,83 @@
-# BrightServe — Digital Services Platform
+# BrightServe - Digital Services Platform
 
 ## 1. Project Overview
 
 BrightServe is a Laravel-based web application designed to help individuals and businesses explore digital services and submit service requests through an online form.
 
-The project aims to make it easier for customers to communicate their service requirements through a simple, organized website.
+The application provides a structured platform for customers to communicate their service requirements and enables BrightServe personnel to receive and manage submitted requests.
 
 ## 2. Problem Statement
 
-Customers seeking digital services may have difficulty communicating their requirements and organizing service requests through informal channels. BrightServe provides a website where customers can view available services and submit their requirements in a structured format.
+Customers seeking digital services may have difficulty communicating their requirements and organizing service requests through informal channels.
+
+BrightServe addresses this problem by providing an accessible website where customers can explore available services and submit their requirements through a structured online form.
 
 ## 3. Target Users
 
 - Individuals seeking digital services.
 - Small businesses requiring digital solutions.
-- BrightServe personnel who will review and manage customer requests as the application develops.
+- BrightServe personnel responsible for receiving and managing service requests.
 
 ## 4. Main Features
 
 The current application includes:
 
-- A homepage introducing BrightServe and its services.
+- A responsive homepage introducing BrightServe and its services.
 - A shared Laravel Blade layout and navigation menu.
-- A service-request form.
-- A service dropdown populated from active services in the database.
-- Server-side validation for submitted customer information.
-- Database storage of submitted service requests.
+- Database-driven homepage service cards displaying active services.
+- A service-request form populated dynamically from the database.
+- Server-side validation of submitted customer information.
+- Customer name validation with a maximum of 100 characters.
+- Phone number format validation.
+- Message validation with a maximum of 1,000 characters.
+- JavaScript message character counter.
+- Preservation of previously entered form values after validation errors.
 - Success and validation-error messages.
-
-Further improvements are planned as part of Part 2.
+- Database storage of submitted service requests.
+- Service-to-booking model relationships.
+- Protection against duplicate submissions through the redirect-after-POST workflow.
 
 ## 5. Information Collected
 
-The service-request form collects the customer's selected service, full name and phone number. Email address, preferred date and a description of the customer's requirements are optional.
+The service-request form collects:
+
+- Selected service.
+- Customer's full name.
+- Phone number.
+- Email address (optional).
+- Preferred service date (optional).
+- Description of the customer's requirements (optional).
 
 ## 6. Technology Stack
 
-- PHP
-- Laravel
-- MySQL
+- PHP 8.3
+- Laravel 13
+- MySQL 8.4
 - Laravel Blade
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
+- Git and GitHub
 
-## 7. Database Structure
+## 7. Database Structure and Relationships
 
-The application uses MySQL for data storage. Its database includes the following tables:
+The application uses MySQL for data storage.
 
-- `services` — stores available digital services.
-- `bookings` — stores submitted service requests.
-- `users` — supports Laravel's user-related functionality.
-- Additional tables used by Laravel for sessions, caching and background jobs.
+Main database tables include:
 
-The `Booking` model is associated with a service through its `service()` relationship. The inverse relationship and other improvements will be completed during Part 2.
+- `services` - stores available digital services.
+- `bookings` - stores submitted customer service requests.
+- `users` - supports Laravel user functionality.
+- Additional Laravel tables for sessions, caching and background jobs.
+
+### Eloquent Relationships
+
+The application uses Laravel Eloquent relationships:
+
+- A booking belongs to a service through the `service()` relationship.
+- A service can have multiple bookings through the `bookings()` relationship.
+
+The homepage retrieves active services from the `services` table and displays their names and descriptions dynamically.
 
 ## 8. Running the Project Locally
 
@@ -61,9 +85,9 @@ The `Booking` model is associated with a service through its `service()` relatio
 
 Install and configure:
 
-- PHP compatible with the project.
+- PHP 8.3 or a compatible version supported by the project.
 - Composer.
-- MySQL or a compatible database server.
+- MySQL 8.4 or a compatible MySQL version.
 - Git.
 
 ### Installation
@@ -86,74 +110,131 @@ Install and configure:
    composer install
    ```
 
-4. Create your local environment file:
+4. Create the local environment file:
 
    ```bat
    copy .env.example .env
    ```
 
-5. Generate the application key:
+5. Generate the Laravel application key:
 
    ```bash
    php artisan key:generate
    ```
 
-6. Create a MySQL database named `brightserve_local`. Configure the database connection in `.env` using the host, port, username and password for your local MySQL installation.
+6. Create a MySQL database named `brightserve_local`.
 
-7. Run the database migrations:
+7. Configure the database connection in `.env`:
+
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3307
+   DB_DATABASE=brightserve_local
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+   Adjust the port, username and password to match your local MySQL configuration.
+
+8. Run the database migrations:
 
    ```bash
    php artisan migrate
    ```
 
-8. Ensure the `services` table contains active service records so they can appear in the request form.
+9. Ensure the `services` table contains active service records so that the services appear on the homepage and request form.
 
-9. Start the Laravel development server:
+10. Start the Laravel development server:
 
-   ```bash
-   php artisan serve
-   ```
+    ```bash
+    php artisan serve
+    ```
 
-10. Open the application in your browser:
+11. Open the application:
 
     `http://127.0.0.1:8000`
 
-To open the service-request page directly, visit:
+### Application Routes
 
-`http://127.0.0.1:8000/request`
+- Homepage: `http://127.0.0.1:8000`
+- Service request form: `http://127.0.0.1:8000/request`
 
 ### Important Configuration Note
 
-Database settings vary between computers. Use the settings appropriate for your local MySQL server. Keep your `.env` file private and never commit database passwords or other secrets to GitHub.
+Database settings vary between computers. Use the settings appropriate for your local MySQL server.
 
-## 9. Testing
+Keep your `.env` file private. Never commit database passwords, application secrets or other sensitive configuration information to GitHub.
 
-The service-request submission feature has been tested locally with fictional customer information. A submitted request was verified in the `bookings` table using Laravel Tinker.
+## 9. Testing and Verification
 
-Additional Part 2 tests will cover input limits, phone-format validation, old input preservation, invalid submissions, duplicate submissions after refreshing, and responsive homepage screenshots.
+The application has undergone local functional testing.
 
-## 10. Current Development Status
+The following checks were performed:
 
-**Part 1: Approved**
+1. **Homepage database integration:** Confirmed that active services are retrieved from MySQL and displayed dynamically.
+2. **Character counter:** Confirmed that the message counter updates as text is entered and resets when the field is cleared.
+3. **Input validation:** Tested an invalid phone number and confirmed that validation prevents the request from being stored.
+4. **Old input preservation:** Implemented Laravel's `old()` helper to retain previously entered form information after validation errors.
+5. **Successful booking submission:** Submitted fictional customer information and verified that the booking was saved in the database.
+6. **Duplicate submission prevention:** Refreshed the redirected request page and confirmed that the booking count remained unchanged.
+7. **Database verification:** Used Laravel Tinker to inspect saved booking records and verify the service relationship.
 
-The initial website, shared layout, request form, database migrations, service dropdown and basic booking-submission functionality have been implemented.
+### Screenshots
 
-**Part 2: In Progress**
+#### Desktop Homepage
 
-The next improvements include:
+![BrightServe Desktop Homepage](docs/screenshots/homepage-desktop.jpg)
 
-- Adding the project brief and a JavaScript message character counter.
-- Completing the model relationships.
-- Loading homepage service cards dynamically from the database.
-- Refining input validation and preserving old form values.
-- Testing successful and unsuccessful submissions.
-- Capturing desktop and mobile screenshots.
-- Improving project documentation and preparing evidence of local testing.
+#### Mobile Homepage
 
-## 11. Repository
+![BrightServe Mobile Homepage](docs/screenshots/homepage-mobile.jpg)
 
-GitHub: https://github.com/Olorunwa2023/brightserve-laravel
+## 10. Development Status
 
-## 12. License
+### Part 1 - Core Application
 
-This project is developed as a Laravel web-development capstone project.
+Implemented:
+
+- Laravel project setup.
+- Database migrations.
+- Shared website layout and navigation.
+- Homepage and service presentation.
+- Service-request form.
+- Database-driven service dropdown.
+- Booking submission functionality.
+
+### Part 2 - Enhancements and Verification
+
+Implemented and locally tested:
+
+- JavaScript message character counter.
+- Service-to-booking Eloquent relationship.
+- Database-driven homepage service cards.
+- Improved server-side form validation.
+- Customer name and message character limits.
+- Phone-format validation.
+- Previous form-value preservation.
+- Invalid and successful booking submission tests.
+- Duplicate-submission verification.
+- Desktop and mobile homepage screenshots.
+
+## 11. GitHub Repository
+
+Repository:
+
+https://github.com/Olorunwa2023/brightserve-laravel
+
+Main development branch: `main`
+
+## 12. Project Conclusion
+
+BrightServe demonstrates the development of a database-driven digital services platform using Laravel, PHP, MySQL and JavaScript.
+
+The application provides customers with a structured way to explore services and submit service requests, supported by server-side validation, persistent database storage and responsive homepage presentation.
+
+The project provides a foundation for future improvements, including administrative booking management, customer communication and additional digital service features.
+
+## 13. License
+
+This project was developed as a Laravel web-development capstone project.
